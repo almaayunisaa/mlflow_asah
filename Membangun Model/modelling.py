@@ -1,8 +1,15 @@
 # file modelling.py
 import pandas as pd
 import mlflow
-from preprocessing.automated_AzizahSalmaAyunisaPurnomo import automate_Azizah
 from sklearn.ensemble import RandomForestClassifier
+import os
+import sys
+
+curr_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(curr_dir)
+sys.path.append(parent_dir)
+
+from preprocessing import automate_Azizah
 
 # Set MLflow Tracking URI
 mlflow.set_tracking_uri("http://127.0.0.1:5000/")
@@ -10,9 +17,9 @@ mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 # Create a new MLflow Experiment
 mlflow.set_experiment("Latihan Model Statis")
 
-df = pd.read_csv("Eksperimen_SML_Azizah_Salma_Ayunisa_Purnomo/PCOS_raw.csv")
-save_path = "Eksperimen_SML_Azizah_Salma_Ayunisa_Purnomo/preprocessing/preprocessing.joblib"
-file_path = "Eksperimen_SML_Azizah_Salma_Ayunisa_Purnomo/preprocessing/PCOS_preprocessing.csv"
+df = pd.read_csv("../PCOS_raw.csv")
+save_path = "preprocessing.joblib"
+file_path = "PCOS_preprocessing.csv"
 X_train, X_test, y_train, y_test = automate_Azizah(df, save_path, file_path)
 
 input_example = X_train[0:5]

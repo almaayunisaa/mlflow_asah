@@ -1,0 +1,1 @@
+from .automated_AzizahSalmaAyunisaPurnomo import automate_Azizah

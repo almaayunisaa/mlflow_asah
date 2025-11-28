@@ -1,16 +1,17 @@
 # file modelling_tuning.py
-from preprocess import preprocess_data
 import pandas as pd
 import mlflow
-from preprocessing.automated_AzizahSalmaAyunisaPurnomo import automate_Azizah
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 
-df = pd.read_csv("Eksperimen_SML_Azizah_Salma_Ayunisa_Purnomo/PCOS_raw.csv")
-save_path = "Eksperimen_SML_Azizah_Salma_Ayunisa_Purnomo/preprocessing/preprocessing.joblib"
-file_path = "Eksperimen_SML_Azizah_Salma_Ayunisa_Purnomo/preprocessing/PCOS_preprocessing.csv"
-X_train, X_test, y_train, y_test = automate_Azizah(df, save_path, file_path)
-input_example = df[0:5]
+import os
+import sys
+
+curr_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(curr_dir)
+sys.path.append(parent_dir)
+
+from preprocessing import automate_Azizah
 
 # Set MLflow Tracking URI
 mlflow.set_tracking_uri("http://127.0.0.1:5000/")
@@ -18,12 +19,19 @@ mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 # Create a new MLflow Experiment
 mlflow.set_experiment("Online Training")
 
+df = pd.read_csv("../PCOS_raw.csv")
+save_path = "preprocessing.joblib"
+file_path = "PCOS_preprocessing.csv"
+X_train, X_test, y_train, y_test = automate_Azizah(df, save_path, file_path)
+
+input_example = X_train[0:5]
+
 # Parameter Grid untuk GridSearchCV
 param_grid = {
-    'n_estimators': [50, 100, 200, 300, 505, 700],
-    'max_depth': [5, 10, 15, 20, 25, 37, 50],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4]
+    'n_estimators': [50, 700],
+    'max_depth': [5,50],
+    'min_samples_split': [2, 10],
+    'min_samples_leaf': [1, 4]
 }
 
 with mlflow.start_run():
@@ -60,3 +68,7 @@ with mlflow.start_run():
     # Evaluate the model on the test set and log accuracy
     accuracy = best_model.score(X_test, y_test)
     mlflow.log_metric("accuracy", accuracy)
+    
+    
+    
+    
