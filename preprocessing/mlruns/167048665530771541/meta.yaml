@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/167048665530771541
+creation_time: 1764380408578
+experiment_id: '167048665530771541'
+last_update_time: 1764380408578
+lifecycle_stage: active
+name: Online Training

@@ -6,7 +6,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 from joblib import dump
 
-def automate_Azizah(df, save_path, file_path):
+def automate_Azizah(df, save_path, file_path_header, file_path_data):
   df.drop('Sl. No', axis=1, inplace=True)
   df.drop('Patient File No.', axis=1, inplace=True)
   df.drop('Unnamed: 44', axis=1, inplace=True)
@@ -53,6 +53,9 @@ def automate_Azizah(df, save_path, file_path):
   # Simpan pipeline
   dump(preprocessor, save_path)
   
+  # Menyimpan Data Preprocessing
+  df.to_csv(file_path_data)
+  
   # Mendapatkan nama kolom tanpa kolom target
   column_names = X.columns
 
@@ -60,13 +63,14 @@ def automate_Azizah(df, save_path, file_path):
   df_header = pd.DataFrame(columns=column_names)
 
   # Menyimpan nama kolom sebagai header tanpa data
-  df_header.to_csv(file_path, index=False)
+  df_header.to_csv(file_path_header, index=False)
 
-  print(f"Nama kolom berhasil disimpan ke: {file_path}")
+  print(f"Nama kolom berhasil disimpan ke: {file_path_header}")
 
   return X_train, X_test, y_train, y_test
 
 df = pd.read_csv("../PCOS_raw.csv")
 save_path = "preprocessing.joblib"
-file_path = "PCOS_preprocessing.csv"
-automate_Azizah(df, save_path, file_path)
+file_path_header = "PCOS_preprocessing_header.csv"
+file_path_data = "PCOS_preprocessing.csv"
+automate_Azizah(df, save_path, file_path_header, file_path_data)

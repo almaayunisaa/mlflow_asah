@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/461538185890184267/de3d2ff36c4d4972bc9b922557cc3c77/artifacts
+end_time: 1764380368522
+entry_point_name: ''
+experiment_id: '461538185890184267'
+lifecycle_stage: active
+run_id: de3d2ff36c4d4972bc9b922557cc3c77
+run_name: righteous-shark-385
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764380350473
+status: 3
+tags: []
+user_id: LENOVO

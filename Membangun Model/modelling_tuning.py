@@ -21,8 +21,9 @@ mlflow.set_experiment("Online Training")
 
 df = pd.read_csv("../PCOS_raw.csv")
 save_path = "preprocessing.joblib"
-file_path = "PCOS_preprocessing.csv"
-X_train, X_test, y_train, y_test = automate_Azizah(df, save_path, file_path)
+file_path_header = "PCOS_preprocessing_header.csv"
+file_path_data = "PCOS_preprocessing.csv"
+X_train, X_test, y_train, y_test = automate_Azizah(df, save_path, file_path_header, file_path_data)
 
 input_example = X_train[0:5]
 
